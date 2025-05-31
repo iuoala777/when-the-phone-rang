@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When The Phone Rang: An Interactive Pitch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Visualization & Content Choices: 
+        - 'The Worlds': Report Info -> The three settings (Cell, Office, Sanctuary). Goal -> Compare & Organize. Viz -> Interactive cards with HTML/CSS. Interaction -> On-click reveal of key descriptive quotes. Justification -> This visualizes the play's central structural conceit.
+        - 'Psychological Arc': Report Info -> Muhammad's deteriorating mental state across scenes. Goal -> Show Change. Viz -> Line chart (Chart.js/Canvas). Interaction -> Tooltips on hover showing key events. Justification -> Translates the narrative's emotional journey into an easily digestible visual.
+        - 'Characters': Report Info -> Character list. Goal -> Inform. Viz -> Styled HTML cards. Interaction -> Simple, clean presentation. Justification -> Clear, concise character reference. NEW: Added LLM-powered character insights triggered by a button.
+        - 'Script': Report Info -> The full play script. Goal -> Inform. Viz -> Accordion-style HTML sections. Interaction -> Click to expand/collapse scenes. Justification -> Prevents a 'wall of text' and improves readability.
+        - 'Context': Report Info -> Foreword, Afterword, Epilogue. Goal -> Inform. Viz -> Formatted text blocks. Interaction -> Static read. Justification -> Provides essential thematic and real-world context. NEW: Added LLM-powered theme exploration triggered by a dropdown.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #292524; /* stone-800 */
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .active-nav {
+            color: #b91c1c; /* red-700 */
+            border-bottom-color: #b91c1c;
+        }
+        .inactive-nav {
+            border-bottom-color: transparent;
+        }
+        .world-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .world-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-content.show {
+            max-height: 2000px; /* Adjust as needed */
+        }
+        .llm-button {
+            padding: 8px 12px;
+            background-color: #ef4444; /* red-500 */
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .llm-button:hover {
+            background-color: #dc2626; /* red-600 */
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-stone-100">
+
+    <header class="bg-stone-800 text-stone-100 p-4 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto flex justify-center items-center">
+            <ul class="flex space-x-6 md:space-x-10 text-sm md:text-base">
+                <li><a href="#pitch" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Pitch</a></li>
+                <li><a href="#worlds" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">The Worlds</a></li>
+                <li><a href="#arc" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">The Arc</a></li>
+                <li><a href="#characters" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Characters</a></li>
+                <li><a href="#script" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Script</a></li>
+                <li><a href="#context" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Context</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="pitch" class="min-h-screen flex flex-col justify-center items-center text-center py-20">
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-stone-900">When The Phone Rang</h1>
+            <p class="mt-4 text-lg md:text-xl text-stone-600 max-w-3xl">A one-act play by Youssef Alaoui & Anton Bonnici</p>
+            <div class="mt-8 p-6 border-2 border-stone-300 rounded-lg max-w-4xl bg-white shadow-sm">
+                <h2 class="font-serif text-2xl font-bold text-red-800 mb-3">A Journey Into the Mind of a Prisoner</h2>
+                <p class="text-stone-700 text-left md:text-center">
+                    "When The Phone Rang" is an urgent and unflinching exploration of psychological torment and human resilience. When a prisoner of war, Muhammad, is subjected to relentless interrogation, his mind escapes the confines of his cell, creating a fragile sanctuary. But when an imaginary phone begins to ring, the lines between reality, memory, and torture blur, forcing him to confront the nature of his own pain. This application provides an interactive deep dive into the play's powerful structure, characters, and searingly relevant themes.
+                </p>
+            </div>
+            <div class="mt-12 text-stone-500 animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+                <span class="text-sm">Scroll to Explore</span>
+            </div>
+        </section>
+
+        <section id="worlds" class="py-20 min-h-screen">
+            <h2 class="font-serif text-4xl font-bold text-center mb-4">Three Worlds, One Stage</h2>
+            <p class="text-center text-stone-600 max-w-3xl mx-auto mb-12">The play's power lies in the constant tension between three distinct spaces that coexist and collide. Click on each world to explore its significance through key excerpts from the script.</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="world-card bg-white p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('cell')">
+                    <h3 class="font-serif text-2xl font-bold mb-2 text-stone-800">The Holding Cell</h3>
+                    <p class="text-stone-600">The stark, physical reality of imprisonment and torture. A cage designed to break the body and spirit.</p>
+                </div>
+                <div class="world-card bg-white p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('office')">
+                    <h3 class="font-serif text-2xl font-bold mb-2 text-stone-800">The Interrogation Office</h3>
+                    <p class="text-stone-600">The weaponization of language and logic. A space of psychological warfare where truth is a casualty.</p>
+                </div>
+                <div class="world-card bg-white p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('sanctuary')">
+                    <h3 class="font-serif text-2xl font-bold mb-2 text-red-800">The Sanctuary</h3>
+                    <p class="text-stone-600">The fragile inner world created as a refuge. A mental living room that becomes its own kind of prison.</p>
+                </div>
+            </div>
+            <div id="world-details" class="mt-12 p-8 bg-stone-800 text-stone-200 rounded-lg shadow-xl min-h-[200px] flex items-center justify-center transition-opacity duration-500 opacity-0">
+                <p class="text-center text-stone-400">Select a world above to see its details.</p>
+            </div>
+        </section>
+        
+        <section id="arc" class="py-20 min-h-screen">
+            <h2 class="font-serif text-4xl font-bold text-center mb-4">The Psychological Arc</h2>
+            <p class="text-center text-stone-600 max-w-3xl mx-auto mb-12">This chart visualizes the escalating psychological strain on Muhammad as the play progresses. The narrative is not linear; it is a descent punctuated by moments of false hope and profound crisis. Hover over points to see key plot events.</p>
+            <div class="chart-container bg-white p-4 rounded-lg shadow-md border border-stone-200 mx-auto" style="position: relative; height: 60vh; max-height: 500px; max-width: 900px;">
+                <canvas id="psychologicalArcChart"></canvas>
+            </div>
+        </section>
+
+        <section id="characters" class="py-20 min-h-screen">
+            <h2 class="font-serif text-4xl font-bold text-center mb-12">The Characters</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold">MUHAMMAD</h3>
+                    <p class="text-stone-600 mt-2">A prisoner of war, mid-forties. His reality has fractured into a desperate struggle for sanity.</p>
+                    <button class="llm-button mt-4 self-start" onclick="getCharacterInsight('muhammad', this)">✨ Character Insight</button>
+                    <div id="muhammad-insight" class="mt-4 text-sm text-stone-800 italic"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold">TWO AMERICAN SOLDIERS</h3>
+                    <p class="text-stone-600 mt-2">Both in their early twenties. They are the instruments of the interrogation, embodying the detached and systemic nature of the violence.</p>
+                    <button class="llm-button mt-4 self-start" onclick="getCharacterInsight('soldiers', this)">✨ Character Insight</button>
+                    <div id="soldiers-insight" class="mt-4 text-sm text-stone-800 italic"></div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200 flex flex-col">
+                    <h3 class="font-serif text-xl font-bold">ABDELAZIZ</h3>
+                    <p class="text-stone-600 mt-2">A mysterious, scalded-faced figure who appears to Muhammad. He is a manifestation of pain, a tormentor, a guide, and perhaps Muhammad himself.</p>
+                    <button class="llm-button mt-4 self-start" onclick="getCharacterInsight('abdelaziz', this)">✨ Character Insight</button>
+                    <div id="abdelaziz-insight" class="mt-4 text-sm text-stone-800 italic"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="script" class="py-20 min-h-screen">
+            <h2 class="font-serif text-4xl font-bold text-center mb-12">The Script</h2>
+            <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md border border-stone-200 space-y-2">
+                <div class="accordion-item">
+                    <button class="accordion-header w-full text-left font-serif text-2xl p-4 bg-stone-50 hover:bg-stone-200 rounded transition-colors flex justify-between items-center">
+                        Scene 01
+                        <span class="plus-icon text-2xl">+</span>
+                    </button>
+                    <div class="accordion-content p-4 border-t border-stone-200">
+                        <p class="italic">LIGHTS UP ON: INTERROGATION OFFICE. MUHAMMAD is sitting on a chair across from SOLDIER ONE... his hands handcuffed...</p>
+                        <p class="mt-4"><strong>SOLDIER ONE:</strong> Is your name Muhammad?</p>
+                        <p><strong>MUHAMMAD:</strong> Yes.</p>
+                        <p class="mt-2">...</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <button class="accordion-header w-full text-left font-serif text-2xl p-4 bg-stone-50 hover:bg-stone-200 rounded transition-colors flex justify-between items-center">
+                        Scene 02
+                        <span class="plus-icon text-2xl">+</span>
+                    </button>
+                    <div class="accordion-content p-4 border-t border-stone-200">
+                         <p class="italic">LIGHTS UP ON: HOLDING CELL. SOLDIER ONE and SOLDIER TWO are holding MUHAMMAD against the iron bars...</p>
+                        <p class="mt-4"><strong>MUHAMMAD (V.O.):</strong> These are the years between the wars. Toward the end of the last war, I was plucked from the streets of my town because I was walking home with bread on the wrong day.</p>
+                        <p class="mt-2">...</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header w-full text-left font-serif text-2xl p-4 bg-stone-50 hover:bg-stone-200 rounded transition-colors flex justify-between items-center">
+                        ... (and so on)
+                        <span class="plus-icon text-2xl">+</span>
+                    </button>
+                    <div class="accordion-content p-4 border-t border-stone-200">
+                        <p class="italic">The full script would be laid out here, scene by scene, in collapsible sections.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="context" class="py-20 min-h-screen">
+            <h2 class="font-serif text-4xl font-bold text-center mb-12">Context & Impact</h2>
+            <div class="max-w-4xl mx-auto space-y-12">
+                <article class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-serif text-2xl font-bold mb-4">Foreword by Genna Rivieccio</h3>
+                    <p class="text-stone-700 leading-relaxed">"The because doesn't matter anymore. So Muhammad tells us shortly into the play... The 'because' never mattered, of course. There has never been a true rhyme or reason to discrimination at its most vile. Other than for those in power to weaponize fear, to use it as a tool for control over the masses... The only difference, as many have already pointed out, is that, this time around, the mask is fully off. No pretending on the government’s part that they aren’t what they are: fascists here to subjugate. To oppress. To deport. To torture."</p>
+                </article>
+                <article class="bg-stone-800 text-stone-200 p-8 rounded-lg shadow-xl">
+                    <h3 class="font-serif text-2xl font-bold mb-4">From the Epilogue</h3>
+                    <p class="leading-relaxed">"Black site prisons, prisons that operate outside the remit of any local or international law, are in use by a number of politically significant countries including Russia, China and the United States. Since 9/11, the U.S. has detained 780 Muslim men and boys that we know of, most of whom have never been charged with a crime, and all of whom have been tortured. At the time of this writing, 30 such detainees are still being held..."</p>
+                </article>
+
+                <div class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                    <h3 class="font-serif text-2xl font-bold mb-4">✨ Explore a Theme</h3>
+                    <div class="flex flex-col md:flex-row items-center gap-4 mb-4">
+                        <label for="theme-select" class="text-stone-700 font-semibold">Select a Theme:</label>
+                        <select id="theme-select" class="p-2 border border-stone-300 rounded-md flex-grow">
+                            <option value="">Choose a theme...</option>
+                            <option value="Oppression">Oppression</option>
+                            <option value="Racial Profiling">Racial Profiling</option>
+                            <option value="Psychological Warfare">Psychological Warfare</option>
+                            <option value="Resilience">Resilience</option>
+                            <option value="War's Impact">War's Impact</option>
+                        </select>
+                        <button class="llm-button" onclick="getThemeInsight()">✨ Get Insight</button>
+                    </div>
+                    <div id="theme-insight" class="mt-4 text-stone-700 italic min-h-[50px] flex items-center justify-center">
+                        <p class="text-stone-500">Select a theme and click 'Get Insight' to learn more.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer class="bg-stone-800 text-stone-300 py-8 text-center">
+        <p>For performance rights, please contact:</p>
+        <p class="mt-2 font-semibold">Youssef Alaoui Fdili (iuoala@gmail.com)</p>
+        <p class="font-semibold">Anton Bonnici (anton@theopiatebooks.com)</p>
+    </footer>
+
+<script>
+    const worldDetails = {
+        cell: {
+            title: 'The Holding Cell',
+            content: `"Muhammad had been chained to a concrete floor in a stress position for four days... His knees felt like railroad pikes had been sledgehammered down through the marrow. His eyes felt like they wept blood..."`
+        },
+        office: {
+            title: 'The Interrogation Office',
+            content: `"Do you know anyone who is planning to use illegal firearms or explosive devices to commit an act of terror? ... The questions keep coming, each round more surreal than the next. I have no ideas. I have no opinions."`
+        },
+        sanctuary: {
+            title: 'The Sanctuary',
+            content: `"Inside that selfsame hood, I have carefully traced out the lines of tree-filled windows with my mind’s eye... My new home is dark, but well-lit within the universe I have created. My couch is soft. My record player works. My television is boring. Delightfully boring..."`
+        }
+    };
+
+    function showWorld(worldKey) {
+        const detailsContainer = document.getElementById('world-details');
+        const data = worldDetails[worldKey];
+        
+        detailsContainer.style.opacity = 0;
+
+        setTimeout(() => {
+            detailsContainer.innerHTML = `
+                <div class="text-center">
+                    <h4 class="font-serif text-3xl font-bold mb-4">${data.title}</h4>
+                    <blockquote class="text-lg text-stone-300 italic max-w-2xl mx-auto">
+                        ${data.content}
+                    </blockquote>
+                </div>
+            `;
+            detailsContainer.style.opacity = 1;
+        }, 300);
+    }
+
+    const psychologicalArcData = {
+        labels: ['Scene 1', 'Scene 2', 'Scene 3', 'Scene 4', 'Scene 5', 'Scene 6', 'Scene 7', 'Scene 8', 'Scene 9'],
+        datasets: [{
+            label: 'Psychological Strain',
+            data: [10, 30, 25, 50, 60, 80, 75, 90, 100],
+            borderColor: '#b91c1c', /* red-700 */
+            backgroundColor: 'rgba(185, 28, 28, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#b91c1c',
+            pointRadius: 5,
+            pointHoverRadius: 8
+        }]
+    };
+    
+    const tooltips = [
+        'Initial Interrogation: Baseline established.',
+        'First Retreat to Sanctuary: Coping mechanism activated.',
+        'Second Interrogation: Pressure increases.',
+        'First Phone Call (Morse Code): Reality begins to warp.',
+        'Physical Escalation (Slapping): Torture intensifies.',
+        'Abdelaziz Appears: The psychological split becomes manifest.',
+        'Waterboarding: Peak physical and mental trauma.',
+        'Confrontation with Abdelaziz: The core conflict is verbalized.',
+        'Climax & Dissolution: Complete breakdown of reality.'
+    ];
+
+    const ctx = document.getElementById('psychologicalArcChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: psychologicalArcData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Strain / Reality Detachment'
+                    }
+                },
+                x: {
+                   title: {
+                       display: true,
+                       text: 'Progression of the Play'
+                   }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += tooltips[context.dataIndex];
+                            }
+                            return label;
+                        }
+                    },
+                    bodyFont: {
+                        size: 14
+                    },
+                    padding: 12,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                }
+            }
+        }
+    });
+
+    document.querySelectorAll('.accordion-header').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const plusIcon = button.querySelector('.plus-icon');
+            
+            button.parentElement.parentElement.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content && item.classList.contains('show')) {
+                    item.classList.remove('show');
+                    item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
+                }
+            });
+
+            content.classList.toggle('show');
+            plusIcon.textContent = content.classList.contains('show') ? '-' : '+';
+        });
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active-nav');
+                    link.classList.add('inactive-nav');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active-nav');
+                        link.classList.remove('inactive-nav');
+                    }
+                });
+            }
+        });
+    }, { threshold: 0.5 }); 
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    const characterData = {
+        muhammad: {
+            description: "A prisoner of war, mid-forties. His reality has fractured into a desperate struggle for sanity. He creates an inner sanctuary to cope with the brutal interrogations.",
+            excerpt: "My name is Muhammad. I have been chained to a concrete floor in a stress position for four days... My new home is dark, but well-lit within the universe I have created."
+        },
+        soldiers: {
+            description: "Two American soldiers in their early twenties. They are the instruments of the interrogation, embodying the detached and systemic nature of the violence.",
+            excerpt: "SOLDIER ONE: Is your name Muhammad? MUHAMMAD: Yes. SLAP."
+        },
+        abdelaziz: {
+            description: "A mysterious, scalded-faced figure who appears to Muhammad. He is a manifestation of pain, a tormentor, a guide, and perhaps Muhammad himself.",
+            excerpt: "I am many things. I am a prisoner, like you. I was in Auschwitz... I am you. I am your pain. I am The Pain."
+        }
+    };
+
+    async function getCharacterInsight(characterKey, buttonElement) {
+        const insightDiv = document.getElementById(`${characterKey}-insight`);
+        const originalButtonText = buttonElement.innerHTML;
+        buttonElement.disabled = true;
+        buttonElement.innerHTML = '<div class="loading-spinner"></div> Loading...';
+        insightDiv.innerHTML = '';
+
+        const character = characterData[characterKey];
+        const prompt = `Given the character "${characterKey}" from the play "When The Phone Rang", and knowing their description: "${character.description}" and this excerpt: "${character.excerpt}", provide a brief psychological insight or a director's note on their portrayal. Focus on their internal world or dramatic function. Keep it concise, under 100 words.`;
+
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        const payload = { contents: chatHistory };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                insightDiv.innerHTML = text;
+            } else {
+                insightDiv.innerHTML = 'Failed to generate insight.';
+            }
+        } catch (error) {
+            console.error('Error calling Gemini API:', error);
+            insightDiv.innerHTML = 'Error generating insight. Please try again.';
+        } finally {
+            buttonElement.disabled = false;
+            buttonElement.innerHTML = originalButtonText;
+        }
+    }
+
+    const themeData = {
+        Oppression: `The play explores the devastating effects of systemic oppression, particularly through Muhammad's experience in a black site prison. The constant interrogation and physical torment highlight how power structures aim to dehumanize individuals. The foreword states: "Jails and prisons are designed to break human beings..."`,
+        'Racial Profiling': `Racial profiling is a central theme, as Muhammad is "plucked from the streets" simply for walking home with bread on the "wrong day." His repeated questions about his identity and background underscore the arbitrary and fear-driven nature of his detention. Muhammad himself asks: "Why must I live my life out in this cage of racial profiling, because of someone else’s paranoid determination?"`,
+        'Psychological Warfare': `The play vividly portrays the psychological warfare waged against Muhammad. The blurring lines between his physical reality and his mental sanctuary, the mysterious phone calls, and the appearance of Abdelaziz all contribute to a profound sense of disorientation and mental anguish. His inner world becomes a new battleground.`,
+        Resilience: `Despite the immense suffering, Muhammad's resilience shines through his ability to create an elaborate inner world. This mental sanctuary, with its "tree-filled windows" and "delightfully boring" television, is his act of defiance against the attempts to break his spirit, showcasing the enduring human capacity for hope and self-preservation.`,
+        'War\'s Impact': `The broader impact of war is a pervasive theme, extending beyond Muhammad's personal suffering to the systemic violence it engenders. The play's epilogue directly addresses the reality of black site prisons and torture post-9/11, underscoring the long-lasting and far-reaching consequences of conflict on human lives.`
+    };
+
+    async function getThemeInsight() {
+        const themeSelect = document.getElementById('theme-select');
+        const theme = themeSelect.value;
+        const insightDiv = document.getElementById('theme-insight');
+        const getInsightButton = themeSelect.nextElementSibling; // The button is the next sibling
+
+        if (!theme) {
+            insightDiv.innerHTML = '<p class="text-stone-500">Please select a theme.</p>';
+            return;
+        }
+
+        const originalButtonText = getInsightButton.innerHTML;
+        getInsightButton.disabled = true;
+        getInsightButton.innerHTML = '<div class="loading-spinner"></div> Generating...';
+        insightDiv.innerHTML = '';
+
+        const themeContent = themeData[theme];
+        const prompt = `Explain how the theme of "${theme}" is explored in the play "When The Phone Rang", drawing on its narrative and characters, using the following context: "${themeContent}". Keep it concise, under 150 words, and directly relevant to the play.`;
+
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        const payload = { contents: chatHistory };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                insightDiv.innerHTML = text;
+            } else {
+                insightDiv.innerHTML = 'Failed to generate insight.';
+            }
+        } catch (error) {
+            console.error('Error calling Gemini API:', error);
+            insightDiv.innerHTML = 'Error generating insight. Please try again.';
+        } finally {
+            getInsightButton.disabled = false;
+            getInsightButton.innerHTML = originalButtonText;
+        }
+    }
+</script>
+</body>
+</html>
