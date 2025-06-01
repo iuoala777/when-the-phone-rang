@@ -11,6 +11,56 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
+        <style>
+/* Overlay for background image for better contrast */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(30, 30, 30, 0.55); /* Dark overlay: adjust opacity as needed */
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Place the overlay below main content */
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Text contrast improvements */
+body, .text-stone-100, .text-stone-200, .text-stone-300 {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 1px 0 #222;
+}
+
+/* Box outline and background for sections/cards */
+.border-stone-200,
+.border-stone-300 {
+    border-color: #fafaf9 !important; /* Lighter border for contrast */
+}
+
+.rounded-lg,
+.shadow-md,
+.shadow-xl,
+.border {
+    background: rgba(28, 28, 28, 0.82); /* Subtle dark bg for cards/boxes */
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.6);
+    border-radius: 1rem;
+}
+
+/* Heading emphasis */
+h1, h2, h3, h4 {
+    color: #fff !important;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.75);
+}
+
+/* Button/accordion header tweaks */
+.accordion-header {
+    background: rgba(40, 40, 40, 0.85) !important;
+    color: #fff !important;
+    border: 1.5px solid #fafaf9 !important;
+}
+
 /* Ensure html and body take up full viewport height and have transparent backgrounds */
 html {
     height: 100%;
