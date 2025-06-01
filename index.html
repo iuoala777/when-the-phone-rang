@@ -1,422 +1,422 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Interactive pitch for the play 'When The Phone Rang': Explore the psychological journey of a prisoner through immersive visuals and narrative.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>When The Phone Rang: An Interactive Pitch</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        /* --- Base Setup & Background --- */
-        html {
-            height: 100%;
-        }
+    <meta charset="UTF-8">
+    <meta name="description" content="Interactive pitch for the play 'When The Phone Rang': Explore the psychological journey of a prisoner through immersive visuals and narrative.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When The Phone Rang: An Interactive Pitch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Base Setup & Background --- */
+        html {
+            height: 100%;
+        }
 
-        body {
-            height: 100%;
-            font-family: 'Inter', sans-serif;
-            color: #e0e0e0; /* Light text for readability */
-            background-color: transparent; /* Body must be transparent to see the pseudo-element behind it */
-        }
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0; /* Light text for readability */
+            background-color: transparent; /* Body must be transparent to see the pseudo-element behind it */
+        }
 
-        /* * THE STATIC BACKGROUND SOLUTION (WORKS ON ALL DEVICES)
-         * - A ::before pseudo-element is created and fixed to the viewport.
-         * - It is placed behind all other content with z-index: -1.
-         * - The background image and a dark overlay (via linear-gradient) are applied here.
-         * - This avoids the mobile browser bug with `background-attachment: fixed`.
-        */
-        body::before {
-            content: "";
-            position: fixed; /* Fixes the element to the viewport */
-            inset: 0; /* Shorthand for top: 0; right: 0; bottom: 0; left: 0; */
-            z-index: -1; /* Places the element behind the body's content */
-            
-            /* Apply the dark overlay and the image in a single declaration */
-            /* Adjusted rgba values from 0.6 to 0.2 for a brighter appearance */
-            background-image: linear-gradient(rgba(30, 30, 30, 0.2), rgba(30, 30, 30, 0.2)), url('https://raw.githubusercontent.com/iuoala777/when-the-phone-rang/refs/heads/main/windows-tv-cushions.webp');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-        }
+        /* * THE STATIC BACKGROUND SOLUTION (WORKS ON ALL DEVICES)
+         * - A ::before pseudo-element is created and fixed to the viewport.
+         * - It is placed behind all other content with z-index: -1.
+         * - The background image and a dark overlay (via linear-gradient) are applied here.
+         * - This avoids the mobile browser bug with `background-attachment: fixed`.
+         */
+        body::before {
+            content: "";
+            position: fixed; /* Fixes the element to the viewport */
+            inset: 0; /* Shorthand for top: 0; right: 0; bottom: 0; left: 0; */
+            z-index: -1; /* Places the element behind the body's content */
+            
+            /* Apply the dark overlay and the image in a single declaration */
+            /* Adjusted rgba values from 0.2 to 0.4 for better background image visibility */
+            background-image: linear-gradient(rgba(30, 30, 30, 0.4), rgba(30, 30, 30, 0.4)), url('https://raw.githubusercontent.com/iuoala777/when-the-phone-rang/refs/heads/main/windows-tv-cushions.webp');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
 
-        /* Ensure main content elements create a stacking context to appear above the background */
-        main, footer {
-            position: relative;
-            z-index: 1;
-        }
+        /* Ensure main content elements create a stacking context to appear above the background */
+        main, footer {
+            position: relative;
+            z-index: 1;
+        }
 
-        /* --- Typography & Contrast --- */
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
+        /* --- Typography & Contrast --- */
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
 
-        body, .text-stone-100, .text-stone-200, .text-stone-300 {
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-        }
+        body, .text-stone-100, .text-stone-200, .text-stone-300 {
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
 
-        h1, h2, h3, h4, h5, h6 {
-            color: #fff !important;
-            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.75);
-        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #fff !important;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.75);
+        }
 
-        /* --- UI Component Styling --- */
-        .content-card {
-            background: rgba(28, 28, 28, 0.85);
-            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.6);
-            border-radius: 1rem;
-            border: 1px solid rgba(250, 250, 249, 0.5);
-        }
+        /* --- UI Component Styling --- */
+        .content-card {
+            background: rgba(28, 28, 28, 0.85);
+            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.6);
+            border-radius: 1rem;
+            border: 1px solid rgba(250, 250, 249, 0.5);
+        }
 
-        /* --- Navigation --- */
-        .active-nav {
-            color: #b91c1c; /* red-700 */
-            border-bottom-color: #b91c1c;
-        }
-        .inactive-nav {
-            border-bottom-color: transparent;
-        }
+        /* --- Navigation --- */
+        .active-nav {
+            color: #b91c1c; /* red-700 */
+            border-bottom-color: #b91c1c;
+        }
+        .inactive-nav {
+            border-bottom-color: transparent;
+        }
 
-        /* --- Worlds Section --- */
-        .world-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .world-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
+        /* --- Worlds Section --- */
+        .world-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .world-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
 
-        /* --- Accordion --- */
-        .accordion-header {
-            background: rgba(40, 40, 40, 0.9) !important;
-            color: #fff !important;
-            border: 1.5px solid #fafaf9 !important;
-        }
+        /* --- Accordion --- */
+        .accordion-header {
+            background: rgba(40, 40, 40, 0.9) !important;
+            color: #fff !important;
+            border: 1.5px solid #fafaf9 !important;
+        }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-            background: rgba(28, 28, 28, 0.7);
-        }
-        .accordion-content.show {
-            max-height: 2000px;
-        }
-    </style>
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            background: rgba(28, 28, 28, 0.7);
+        }
+        .accordion-content.show {
+            max-height: 2000px;
+        }
+    </style>
 </head>
 <body class="bg-stone-900">
 
-    <header class="bg-stone-800/80 backdrop-blur-sm text-stone-100 p-4 sticky top-0 z-50 shadow-lg">
-        <nav class="container mx-auto flex justify-center items-center">
-            <ul class="flex flex-wrap justify-center space-x-4 md:space-x-10 text-sm md:text-base">
-                <li><a href="#pitch" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Pitch</a></li>
-                <li><a href="#worlds" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">The Worlds</a></li>
-                <li><a href="#arc" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">The Arc</a></li>
-                <li><a href="#characters" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Characters</a></li>
-                <li><a href="#script" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Script</a></li>
-                <li><a href="#context" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Context</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="bg-stone-800/80 backdrop-blur-sm text-stone-100 p-4 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto flex justify-center items-center">
+            <ul class="flex flex-wrap justify-center space-x-4 md:space-x-10 text-sm md:text-base">
+                <li><a href="#pitch" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Pitch</a></li>
+                <li><a href="#worlds" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">The Worlds</a></li>
+                <li><a href="#arc" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">The Arc</a></li>
+                <li><a href="#characters" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Characters</a></li>
+                <li><a href="#script" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Script</a></li>
+                <li><a href="#context" class="nav-link inactive-nav font-semibold border-b-2 pb-1 transition-colors">Context</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <main> <section id="pitch" class="min-h-screen flex flex-col justify-center items-center text-center py-20 px-4">
-            <h1 class="font-serif text-5xl md:text-7xl font-bold">When The Phone Rang</h1>
-            <p class="mt-4 text-lg md:text-xl text-stone-300 max-w-3xl">A one-act play by Anton Bonnici & Youssef Alaoui</p>
-            <div class="mt-8 p-6 content-card max-w-4xl">
-                <h2 class="font-serif text-2xl font-bold text-red-700 mb-3">A Journey Into the Mind of a Prisoner</h2>
-                <p class="text-stone-200 text-left md:text-center">
-                    "When The Phone Rang" is an urgent and unflinching exploration of psychological torment and human resilience. When a prisoner of war, Muhammad, is subjected to relentless interrogation, his mind escapes the confines of his cell, creating a fragile sanctuary. But when an imaginary phone begins to ring, the lines between reality, memory, and torture blur, forcing him to confront the nature of his own pain. This application provides an interactive deep dive into the play's powerful structure, characters, and searingly relevant themes.
-                </p>
-            </div>
-            <a href="#worlds" class="mt-12 text-stone-300 animate-bounce cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-                <span class="text-sm">Scroll to Explore</span>
-            </a>
-        </section>
+    <main> <section id="pitch" class="min-h-screen flex flex-col justify-center items-center text-center py-20 px-4">
+            <h1 class="font-serif text-5xl md:text-7xl font-bold">When The Phone Rang</h1>
+            <p class="mt-4 text-lg md:text-xl text-stone-300 max-w-3xl">A one-act play by Anton Bonnici & Youssef Alaoui</p>
+            <div class="mt-8 p-6 content-card max-w-4xl">
+                <h2 class="font-serif text-2xl font-bold text-red-700 mb-3">A Journey Into the Mind of a Prisoner</h2>
+                <p class="text-stone-200 text-left md:text-center">
+                    "When The Phone Rang" is an urgent and unflinching exploration of psychological torment and human resilience. When a prisoner of war, Muhammad, is subjected to relentless interrogation, his mind escapes the confines of his cell, creating a fragile sanctuary. But when an imaginary phone begins to ring, the lines between reality, memory, and torture blur, forcing him to confront the nature of his own pain. This application provides an interactive deep dive into the play's powerful structure, characters, and searingly relevant themes.
+                </p>
+            </div>
+            <a href="#worlds" class="mt-12 text-stone-300 animate-bounce cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+                <span class="text-sm">Scroll to Explore</span>
+            </a>
+        </section>
 
-        <div class="container mx-auto p-4 md:p-8">
-            <section id="worlds" class="py-20 min-h-screen">
-                <h2 class="font-serif text-4xl font-bold text-center mb-4">Three Worlds, One Stage</h2>
-                <p class="text-center text-stone-300 max-w-3xl mx-auto mb-12">The play's power lies in the constant tension between three distinct spaces that coexist and collide. Click on each world to explore its significance.</p>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="world-card content-card p-6 cursor-pointer" data-world="cell" role="button" tabindex="0">
-                        <h3 class="font-serif text-2xl font-bold mb-2">The Holding Cell</h3>
-                        <p class="text-stone-300">The stark, physical reality of imprisonment and torture. A cage designed to break the body and spirit.</p>
-                    </div>
-                    <div class="world-card content-card p-6 cursor-pointer" data-world="office" role="button" tabindex="0">
-                        <h3 class="font-serif text-2xl font-bold mb-2">The Interrogation Office</h3>
-                        <p class="text-stone-300">The weaponization of language and logic. A space of psychological warfare where truth is a casualty.</p>
-                    </div>
-                    <div class="world-card content-card p-6 cursor-pointer" data-world="sanctuary" role="button" tabindex="0">
-                        <h3 class="font-serif text-2xl font-bold mb-2 text-red-700">The Sanctuary</h3>
-                        <p class="text-stone-300">The fragile inner world created as a refuge. A mental living room that becomes its own kind of prison.</p>
-                    </div>
-                </div>
-                <div id="world-details" class="mt-12 p-8 content-card min-h-[200px] flex items-center justify-center transition-opacity duration-500 opacity-0">
-                    <p class="text-center text-stone-400">Select a world above to see its details.</p>
-                </div>
-            </section>
-            
-            <section id="arc" class="py-20 min-h-screen">
-                <h2 class="font-serif text-4xl font-bold text-center mb-4">The Psychological Arc</h2>
-                <p class="text-center text-stone-300 max-w-3xl mx-auto mb-12">This chart visualizes the escalating psychological strain on Muhammad. The narrative is not linear; it is a descent punctuated by moments of false hope and crisis. Hover over points to see key plot events.</p>
-                <div class="content-card p-4 mx-auto" style="position: relative; height: 60vh; max-height: 500px; max-width: 900px;">
-                    <canvas id="psychologicalArcChart"></canvas>
-                </div>
-            </section>
+        <div class="container mx-auto p-4 md:p-8">
+            <section id="worlds" class="py-20 min-h-screen">
+                <h2 class="font-serif text-4xl font-bold text-center mb-4">Three Worlds, One Stage</h2>
+                <p class="text-center text-stone-300 max-w-3xl mx-auto mb-12">The play's power lies in the constant tension between three distinct spaces that coexist and collide. Click on each world to explore its significance.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="world-card content-card p-6 cursor-pointer" data-world="cell" role="button" tabindex="0">
+                        <h3 class="font-serif text-2xl font-bold mb-2">The Holding Cell</h3>
+                        <p class="text-stone-300">The stark, physical reality of imprisonment and torture. A cage designed to break the body and spirit.</p>
+                    </div>
+                    <div class="world-card content-card p-6 cursor-pointer" data-world="office" role="button" tabindex="0">
+                        <h3 class="font-serif text-2xl font-bold mb-2">The Interrogation Office</h3>
+                        <p class="text-stone-300">The weaponization of language and logic. A space of psychological warfare where truth is a casualty.</p>
+                    </div>
+                    <div class="world-card content-card p-6 cursor-pointer" data-world="sanctuary" role="button" tabindex="0">
+                        <h3 class="font-serif text-2xl font-bold mb-2 text-red-700">The Sanctuary</h3>
+                        <p class="text-stone-300">The fragile inner world created as a refuge. A mental living room that becomes its own kind of prison.</p>
+                    </div>
+                </div>
+                <div id="world-details" class="mt-12 p-8 content-card min-h-[200px] flex items-center justify-center transition-opacity duration-500 opacity-0">
+                    <p class="text-center text-stone-400">Select a world above to see its details.</p>
+                </div>
+            </section>
+            
+            <section id="arc" class="py-20 min-h-screen">
+                <h2 class="font-serif text-4xl font-bold text-center mb-4">The Psychological Arc</h2>
+                <p class="text-center text-stone-300 max-w-3xl mx-auto mb-12">This chart visualizes the escalating psychological strain on Muhammad. The narrative is not linear; it is a descent punctuated by moments of false hope and crisis. Hover over points to see key plot events.</p>
+                <div class="content-card p-4 mx-auto" style="position: relative; height: 60vh; max-height: 500px; max-width: 900px;">
+                    <canvas id="psychologicalArcChart"></canvas>
+                </div>
+            </section>
 
-            <section id="characters" class="py-20 min-h-screen">
-                <h2 class="font-serif text-4xl font-bold text-center mb-12">The Characters</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    <div class="content-card p-6 flex flex-col">
-                        <h3 class="font-serif text-xl font-bold">MUHAMMAD</h3>
-                        <p class="text-stone-300 mt-2">A prisoner of war, mid-forties. His reality has fractured into a desperate struggle for sanity.</p>
-                    </div>
-                    <div class="content-card p-6 flex flex-col">
-                        <h3 class="font-serif text-xl font-bold">TWO AMERICAN SOLDIERS</h3>
-                        <p class="text-stone-300 mt-2">Both in their early twenties. They are the instruments of the interrogation, embodying the detached and systemic nature of the violence.</p>
-                    </div>
-                    <div class="content-card p-6 flex flex-col">
-                        <h3 class="font-serif text-xl font-bold">ABDELAZIZ</h3>
-                        <p class="text-stone-300 mt-2">A mysterious, scalded-faced figure who appears to Muhammad. He is a manifestation of pain, a tormentor, a guide, and perhaps Muhammad himself.</p>
-                    </div>
-                </div>
-            </section>
+            <section id="characters" class="py-20 min-h-screen">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12">The Characters</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="content-card p-6 flex flex-col">
+                        <h3 class="font-serif text-xl font-bold">MUHAMMAD</h3>
+                        <p class="text-stone-300 mt-2">A prisoner of war, mid-forties. His reality has fractured into a desperate struggle for sanity.</p>
+                    </div>
+                    <div class="content-card p-6 flex flex-col">
+                        <h3 class="font-serif text-xl font-bold">TWO AMERICAN SOLDIERS</h3>
+                        <p class="text-stone-300 mt-2">Both in their early twenties. They are the instruments of the interrogation, embodying the detached and systemic nature of the violence.</p>
+                    </div>
+                    <div class="content-card p-6 flex flex-col">
+                        <h3 class="font-serif text-xl font-bold">ABDELAZIZ</h3>
+                        <p class="text-stone-300 mt-2">A mysterious, scalded-faced figure who appears to Muhammad. He is a manifestation of pain, a tormentor, a guide, and perhaps Muhammad himself.</p>
+                    </div>
+                </div>
+            </section>
 
-            <section id="script" class="py-20 min-h-screen">
-                <h2 class="font-serif text-4xl font-bold text-center mb-12">The Script</h2>
-                <div class="max-w-4xl mx-auto space-y-2">
-                    <div class="accordion-item content-card overflow-hidden">
-                        <button class="accordion-header w-full text-left font-serif text-2xl p-4 transition-colors flex justify-between items-center">
-                            <span>Scene One</span>
-                            <span class="plus-icon text-2xl font-mono">-</span>
-                        </button>
-                        <div class="accordion-content p-4 border-t border-stone-600 show">
-                            <p class="italic text-stone-300">LIGHTS UP ON: INTERROGATION OFFICE. MUHAMMAD is sitting on a chair across from SOLDIER ONE... his hands handcuffed...</p>
-                            <p class="mt-4 text-stone-200"><strong>SOLDIER ONE:</strong> Is your name Muhammad?</p>
-                            <p class="text-stone-200"><strong>MUHAMMAD:</strong> Yes.</p>
-                        </div>
-                    </div>
-                    <div class="accordion-item content-card overflow-hidden">
-                        <button class="accordion-header w-full text-left font-serif text-2xl p-4 transition-colors flex justify-between items-center">
-                            <span>Scene Two</span>
-                            <span class="plus-icon text-2xl font-mono">+</span>
-                        </button>
-                        <div class="accordion-content p-4 border-t border-stone-600">
-                            <p class="italic text-stone-300">LIGHTS UP ON: HOLDING CELL. SOLDIER ONE and SOLDIER TWO are holding MUHAMMAD against the iron bars...</p>
-                            <p class="mt-4 text-stone-200"><strong>MUHAMMAD (V.O.):</strong> These are the years between the wars. Toward the end of the last war, I was plucked from the streets of my town because I was walking home with bread on the wrong day.</p>
-                        </div>
-                    </div>
-                     <div class="accordion-item content-card overflow-hidden">
-                        <button class="accordion-header w-full text-left font-serif text-2xl p-4 transition-colors flex justify-between items-center">
-                            <span>Scene Three</span>
-                            <span class="plus-icon text-2xl font-mono">+</span>
-                        </button>
-                        <div class="accordion-content p-4 border-t border-stone-600">
-                             <p class="italic text-stone-300">LIGHTS UP ON: INTERROGATION OFFICE. MUHAMMAD is sitting on a chair across from SOLDIER ONE... with his hands cuffed to the table.</p>
-                             <p class="mt-4 text-stone-200"><strong>SOLDIER ONE:</strong> Are you the son of Mr. and Mrs. Nablus?</p>
-                             <p class="text-stone-200"><strong>MUHAMMAD:</strong> Yes.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <section id="script" class="py-20 min-h-screen">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12">The Script</h2>
+                <div class="max-w-4xl mx-auto space-y-2">
+                    <div class="accordion-item content-card overflow-hidden">
+                        <button class="accordion-header w-full text-left font-serif text-2xl p-4 transition-colors flex justify-between items-center">
+                            <span>Scene One</span>
+                            <span class="plus-icon text-2xl font-mono">-</span>
+                        </button>
+                        <div class="accordion-content p-4 border-t border-stone-600 show">
+                            <p class="italic text-stone-300">LIGHTS UP ON: INTERROGATION OFFICE. MUHAMMAD is sitting on a chair across from SOLDIER ONE... his hands handcuffed...</p>
+                            <p class="mt-4 text-stone-200"><strong>SOLDIER ONE:</strong> Is your name Muhammad?</p>
+                            <p class="text-stone-200"><strong>MUHAMMAD:</strong> Yes.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item content-card overflow-hidden">
+                        <button class="accordion-header w-full text-left font-serif text-2xl p-4 transition-colors flex justify-between items-center">
+                            <span>Scene Two</span>
+                            <span class="plus-icon text-2xl font-mono">+</span>
+                        </button>
+                        <div class="accordion-content p-4 border-t border-stone-600">
+                            <p class="italic text-stone-300">LIGHTS UP ON: HOLDING CELL. SOLDIER ONE and SOLDIER TWO are holding MUHAMMAD against the iron bars...</p>
+                            <p class="mt-4 text-stone-200"><strong>MUHAMMAD (V.O.):</strong> These are the years between the wars. Toward the end of the last war, I was plucked from the streets of my town because I was walking home with bread on the wrong day.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item content-card overflow-hidden">
+                        <button class="accordion-header w-full text-left font-serif text-2xl p-4 transition-colors flex justify-between items-center">
+                            <span>Scene Three</span>
+                            <span class="plus-icon text-2xl font-mono">+</span>
+                        </button>
+                        <div class="accordion-content p-4 border-t border-stone-600">
+                            <p class="italic text-stone-300">LIGHTS UP ON: INTERROGATION OFFICE. MUHAMMAD is sitting on a chair across from SOLDIER ONE... with his hands cuffed to the table.</p>
+                            <p class="mt-4 text-stone-200"><strong>SOLDIER ONE:</strong> Are you the son of Mr. and Mrs. Nablus?</p>
+                            <p class="text-stone-200"><strong>MUHAMMAD:</strong> Yes.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            <section id="context" class="py-20 min-h-screen">
-                <h2 class="font-serif text-4xl font-bold text-center mb-12">Context & Impact</h2>
-                <div class="max-w-4xl mx-auto space-y-12">
-                    <article class="content-card p-8">
-                        <h3 class="font-serif text-2xl font-bold mb-4">Foreword by Genna Rivieccio</h3>
-                        <p class="text-stone-200 leading-relaxed">"The because doesn't matter anymore. So Muhammad tells us shortly into the play... The 'because' never mattered, of course. There has never been a true rhyme or reason to discrimination at its most vile. Other than for those in power to weaponize fear, to use it as a tool for control over the masses... The only difference, as many have already pointed out, is that, this time around, the mask is fully off."</p>
-                    </article>
-                    <article class="content-card p-8">
-                        <h3 class="font-serif text-2xl font-bold mb-4">From the Epilogue</h3>
-                        <p class="text-stone-200 leading-relaxed">"Black site prisons, prisons that operate outside the remit of any local or international law, are in use by a number of politically significant countries including Russia, China and the United States. Since 9/11, the U.S. has detained 780 Muslim men and boys that we know of, most of whom have never been charged with a crime, and all of whom have been tortured. At the time of this writing, 30 such detainees are still being held..."</p>
-                    </article>
-                </div>
-            </section>
-        </div>
-    </main>
-    
-    <footer class="bg-stone-900/80 text-stone-300 py-8 text-center">
-        <p>For performance rights, please contact:</p>
-        <p class="mt-2 font-semibold">Youssef Alaoui Fdili (iuoala@duck.com)</p>
-        <p class="font-semibold">Anton Bonnici (anton@theopiatebooks.com)</p>
-                <p class="mt-4">
-            You can purchase the book here:
-            <a href="https://www.mcnallyjackson.com/book/9782959327889" class="text-blue-400 hover:underline">When The Phone Rang - McNally Jackson</a>
-        </p>
-    </footer>
+            <section id="context" class="py-20 min-h-screen">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12">Context & Impact</h2>
+                <div class="max-w-4xl mx-auto space-y-12">
+                    <article class="content-card p-8">
+                        <h3 class="font-serif text-2xl font-bold mb-4">Foreword by Genna Rivieccio</h3>
+                        <p class="text-stone-200 leading-relaxed">"The because doesn't matter anymore. So Muhammad tells us shortly into the play... The 'because' never mattered, of course. There has never been a true rhyme or reason to discrimination at its most vile. Other than for those in power to weaponize fear, to use it as a tool for control over the masses... The only difference, as many have already pointed out, is that, this time around, the mask is fully off."</p>
+                    </article>
+                    <article class="content-card p-8">
+                        <h3 class="font-serif text-2xl font-bold mb-4">From the Epilogue</h3>
+                        <p class="text-stone-200 leading-relaxed">"Black site prisons, prisons that operate outside the remit of any local or international law, are in use by a number of politically significant countries including Russia, China and the United States. Since 9/11, the U.S. has detained 780 Muslim men and boys that we know of, most of whom have never been charged with a crime, and all of whom have been tortured. At the time of this writing, 30 such detainees are still being held..."</p>
+                    </article>
+                </div>
+            </section>
+        </div>
+        </main>
+        
+        <footer class="bg-stone-900/80 text-stone-300 py-8 text-center">
+            <p>For performance rights, please contact:</p>
+            <p class="mt-2 font-semibold">Youssef Alaoui Fdili (iuoala@duck.com)</p>
+            <p class="font-semibold">Anton Bonnici (anton@theopiatebooks.com)</p>
+            <p class="mt-4">
+                You can purchase the book here:
+                <a href="https://www.mcnallyjackson.com/book/9782959327889" class="text-blue-400 hover:underline">When The Phone Rang - McNally Jackson</a>
+            </p>
+        </footer>
 
 <script>
 // All JavaScript remains the same as the previous version.
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 'The Worlds' Section Logic ---
-    const worldDetailsData = {
-        cell: {
-            title: 'The Holding Cell',
-            content: `"Muhammad had been chained to a concrete floor in a stress position for four days... His knees felt like railroad pikes had been sledgehammered down through the marrow. His eyes felt like they wept blood..."`
-        },
-        office: {
-            title: 'The Interrogation Office',
-            content: `"Do you know anyone who is planning to use illegal firearms or explosive devices to commit an act of terror? ... The questions keep coming, each round more surreal than the next. I have no ideas. I have no opinions."`
-        },
-        sanctuary: {
-            title: 'The Sanctuary',
-            content: `"Inside that selfsame hood, I have carefully traced out the lines of tree-filled windows with my mind’s eye... My new home is dark, but well-lit within the universe I have created. My couch is soft. My record player works. My television is boring. Delightfully boring..."`
-        }
-    };
+    // --- 'The Worlds' Section Logic ---
+    const worldDetailsData = {
+        cell: {
+            title: 'The Holding Cell',
+            content: `"Muhammad had been chained to a concrete floor in a stress position for four days... His knees felt like railroad pikes had been sledgehammered down through the marrow. His eyes felt like they wept blood..."`
+        },
+        office: {
+            title: 'The Interrogation Office',
+            content: `"Do you know anyone who is planning to use illegal firearms or explosive devices to commit an act of terror? ... The questions keep coming, each round more surreal than the next. I have no ideas. I have no opinions."`
+        },
+        sanctuary: {
+            title: 'The Sanctuary',
+            content: `"Inside that selfsame hood, I have carefully traced out the lines of tree-filled windows with my mind’s eye... My new home is dark, but well-lit within the universe I have created. My couch is soft. My record player works. My television is boring. Delightfully boring..."`
+        }
+    };
 
-    const worldCards = document.querySelectorAll('.world-card');
-    const detailsContainer = document.getElementById('world-details');
+    const worldCards = document.querySelectorAll('.world-card');
+    const detailsContainer = document.getElementById('world-details');
 
-    worldCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const worldKey = card.dataset.world;
-            const data = worldDetailsData[worldKey];
-            
-            detailsContainer.style.opacity = 0;
+    worldCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const worldKey = card.dataset.world;
+            const data = worldDetailsData[worldKey];
+            
+            detailsContainer.style.opacity = 0;
 
-            setTimeout(() => {
-                detailsContainer.innerHTML = `
-                    <div class="text-center">
-                        <h4 class="font-serif text-3xl font-bold mb-4">${data.title}</h4>
-                        <blockquote class="text-lg text-stone-300 italic max-w-2xl mx-auto">
-                            ${data.content}
-                        </blockquote>
-                    </div>
-                `;
-                detailsContainer.style.opacity = 1;
-            }, 300);
-        });
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                card.click();
-            }
-        });
-    });
-
-
-    // --- Psychological Arc Chart Logic ---
-    const psychologicalArcData = {
-        labels: ['Scene 1', 'Scene 2', 'Scene 3', 'Scene 4', 'Scene 5', 'Scene 6', 'Scene 7', 'Scene 8', 'Climax'],
-        datasets: [{
-            label: 'Psychological Strain',
-            data: [10, 30, 25, 50, 60, 80, 75, 90, 100],
-            borderColor: '#b91c1c',
-            backgroundColor: 'rgba(185, 28, 28, 0.2)',
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: '#ef4444',
-            pointBorderColor: '#fef2f2',
-            pointBorderWidth: 2,
-            pointRadius: 6,
-            pointHoverRadius: 9
-        }]
-    };
-    
-    const tooltips = [
-        'Initial Interrogation: Baseline established.',
-        'First Retreat to Sanctuary: Coping mechanism activated.',
-        'Second Interrogation: Pressure increases.',
-        'First Phone Call (Morse Code): Reality begins to warp.',
-        'Physical Escalation (Slapping): Torture intensifies.',
-        'Abdelaziz Appears: The psychological split becomes manifest.',
-        'Waterboarding: Peak physical and mental trauma.',
-        'Confrontation with Abdelaziz: The core conflict is verbalized.',
-        'Climax & Dissolution: Complete breakdown of reality.'
-    ];
-
-    const ctx = document.getElementById('psychologicalArcChart')?.getContext('2d');
-    if (ctx) {
-        new Chart(ctx, {
-            type: 'line',
-            data: psychologicalArcData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: { display: true, text: 'Strain / Reality Detachment', color: '#e0e0e0', font: { size: 14 }},
-                        ticks: { color: '#d1d5db' },
-                        grid: { color: 'rgba(255, 255, 255, 0.15)' }
-                    },
-                    x: {
-                        title: { display: true, text: 'Progression of the Play', color: '#e0e0e0', font: { size: 14 }},
-                        ticks: { color: '#d1d5db' },
-                        grid: { color: 'rgba(255, 255, 255, 0.15)' }
-                    }
-                },
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => tooltips[context.dataIndex] || '',
-                        },
-                        bodyFont: { size: 14 },
-                        padding: 12,
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#e0e0e0',
-                    }
-                }
-            }
-        });
-    }
-
-    // --- Accordion Logic ---
-    document.querySelectorAll('.accordion-header').forEach(button => {
-        button.addEventListener('click', () => {
-            const content = button.nextElementSibling;
-            const plusIcon = button.querySelector('.plus-icon');
-            const isOpening = !content.classList.contains('show');
-
-            document.querySelectorAll('.accordion-content').forEach(item => {
-                if (item !== content && item.classList.contains('show')) {
-                    item.classList.remove('show');
-                    item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
-                }
-            });
-
-            content.classList.toggle('show', isOpening);
-            plusIcon.textContent = isOpening ? '−' : '+';
-        });
-    });
+            setTimeout(() => {
+                detailsContainer.innerHTML = `
+                    <div class="text-center">
+                        <h4 class="font-serif text-3xl font-bold mb-4">${data.title}</h4>
+                        <blockquote class="text-lg text-stone-300 italic max-w-2xl mx-auto">
+                            ${data.content}
+                        </blockquote>
+                    </div>
+                `;
+                detailsContainer.style.opacity = 1;
+            }, 300);
+        });
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                card.click();
+            }
+        });
+    });
 
 
-    // --- Navigation Link Highlighting on Scroll ---
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('main section');
+    // --- Psychological Arc Chart Logic ---
+    const psychologicalArcData = {
+        labels: ['Scene 1', 'Scene 2', 'Scene 3', 'Scene 4', 'Scene 5', 'Scene 6', 'Scene 7', 'Scene 8', 'Climax'],
+        datasets: [{
+            label: 'Psychological Strain',
+            data: [10, 30, 25, 50, 60, 80, 75, 90, 100],
+            borderColor: '#b91c1c',
+            backgroundColor: 'rgba(185, 28, 28, 0.2)',
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#ef4444',
+            pointBorderColor: '#fef2f2',
+            pointBorderWidth: 2,
+            pointRadius: 6,
+            pointHoverRadius: 9
+        }]
+    };
+    
+    const tooltips = [
+        'Initial Interrogation: Baseline established.',
+        'First Retreat to Sanctuary: Coping mechanism activated.',
+        'Second Interrogation: Pressure increases.',
+        'First Phone Call (Morse Code): Reality begins to warp.',
+        'Physical Escalation (Slapping): Torture intensifies.',
+        'Abdelaziz Appears: The psychological split becomes manifest.',
+        'Waterboarding: Peak physical and mental trauma.',
+        'Confrontation with Abdelaziz: The core conflict is verbalized.',
+        'Climax & Dissolution: Complete breakdown of reality.'
+    ];
 
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5
-    };
+    const ctx = document.getElementById('psychologicalArcChart')?.getContext('2d');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: psychologicalArcData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: 'Strain / Reality Detachment', color: '#e0e0e0', font: { size: 14 }},
+                        ticks: { color: '#d1d5db' },
+                        grid: { color: 'rgba(255, 255, 255, 0.15)' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Progression of the Play', color: '#e0e0e0', font: { size: 14 }},
+                        ticks: { color: '#d1d5db' },
+                        grid: { color: 'rgba(255, 255, 255, 0.15)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => tooltips[context.dataIndex] || '',
+                        },
+                        bodyFont: { size: 14 },
+                        padding: 12,
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e0e0e0',
+                    }
+                }
+            }
+        });
+    }
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const targetId = entry.target.id;
-                navLinks.forEach(link => {
-                    const isActive = link.getAttribute('href') === `#${targetId}`;
-                    link.classList.toggle('active-nav', isActive);
-                    link.classList.toggle('inactive-nav', !isActive);
-                });
-            }
-        });
-    }, observerOptions);
+    // --- Accordion Logic ---
+    document.querySelectorAll('.accordion-header').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const plusIcon = button.querySelector('.plus-icon');
+            const isOpening = !content.classList.contains('show');
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content && item.classList.contains('show')) {
+                    item.classList.remove('show');
+                    item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
+                }
+            });
+
+            content.classList.toggle('show', isOpening);
+            plusIcon.textContent = isOpening ? '−' : '+';
+        });
+    });
+
+
+    // --- Navigation Link Highlighting on Scroll ---
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const targetId = entry.target.id;
+                navLinks.forEach(link => {
+                    const isActive = link.getAttribute('href') === `#${targetId}`;
+                    link.classList.toggle('active-nav', isActive);
+                    link.classList.toggle('inactive-nav', !isActive);
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
 });
 </script>
 </body>
