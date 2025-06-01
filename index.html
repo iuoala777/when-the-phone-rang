@@ -13,7 +13,6 @@
 body {
     font-family: 'Inter', sans-serif;
     /* Custom Background Image */
-    /* FIX: Changed smart quotes to straight quotes for the URL */
     background-image: url('https://raw.githubusercontent.com/iuoala777/when-the-phone-rang/main/windows-tv-cushions.jpg');
     background-size: cover; /* This makes the image cover the entire screen */
     background-repeat: no-repeat; /* Prevents the image from tiling */
@@ -51,7 +50,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body >
 
     <header class="bg-stone-800 text-stone-100 p-4 sticky top-0 z-50 shadow-lg">
         <nav class="container mx-auto flex justify-center items-center">
@@ -262,101 +261,3 @@ body {
         'Second Interrogation: Pressure increases.',
         'First Phone Call (Morse Code): Reality begins to warp.',
         'Physical Escalation (Slapping): Torture intensifies.',
-        'Abdelaziz Appears: The psychological split becomes manifest.',
-        'Waterboarding: Peak physical and mental trauma.',
-        'Confrontation with Abdelaziz: The core conflict is verbalized.',
-        'Climax & Dissolution: Complete breakdown of reality.'
-    ];
-
-    const ctx = document.getElementById('psychologicalArcChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: psychologicalArcData,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    title: {
-                        display: true,
-                        text: 'Strain / Reality Detachment'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Progression of the Play'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.y !== null) {
-                                label += tooltips[context.dataIndex];
-                            }
-                            return label;
-                        }
-                    },
-                    bodyFont: {
-                        size: 14
-                    },
-                    padding: 12,
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)'
-                }
-            }
-        }
-    });
-
-    document.querySelectorAll('.accordion-header').forEach(button => {
-        button.addEventListener('click', () => {
-            const content = button.nextElementSibling;
-            const plusIcon = button.querySelector('.plus-icon');
-            
-            // Close other open accordions
-            button.parentElement.parentElement.querySelectorAll('.accordion-content').forEach(item => {
-                if (item !== content && item.classList.contains('show')) {
-                    item.classList.remove('show');
-                    item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
-                }
-            });
-
-            content.classList.toggle('show');
-            plusIcon.textContent = content.classList.contains('show') ? '-' : '+';
-        });
-    });
-
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('main section');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active-nav');
-                    link.classList.add('inactive-nav');
-                    if (link.getAttribute('href').substring(1) === entry.target.id) {
-                        link.classList.add('active-nav');
-                        link.classList.remove('inactive-nav');
-                    }
-                });
-            }
-        });
-    }, { threshold: 0.5 }); // Adjust threshold if sections are very short or long
-
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-</script>
-</body>
-</html>
