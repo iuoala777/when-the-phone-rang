@@ -70,7 +70,7 @@ body {
         <section id="pitch" class="min-h-screen flex flex-col justify-center items-center text-center py-20">
             <h1 class="font-serif text-5xl md:text-7xl font-bold text-stone-100">When The Phone Rang</h1>
             <p class="mt-4 text-lg md:text-xl text-stone-300 max-w-3xl">A one-act play by Anton Bonnici & Youssef Alaoui</p>
-            <div class="mt-8 p-6 border-2 border-stone-300 rounded-lg max-w-4xl bg-white shadow-sm">
+            <div class="mt-8 p-6 border-2 border-stone-300 rounded-lg max-w-4xl shadow-sm">
                 <h2 class="font-serif text-2xl font-bold text-red-800 mb-3">A Journey Into the Mind of a Prisoner</h2>
                 <p class="text-stone-700 text-left md:text-center">
                     "When The Phone Rang" is an urgent and unflinching exploration of psychological torment and human resilience. When a prisoner of war, Muhammad, is subjected to relentless interrogation, his mind escapes the confines of his cell, creating a fragile sanctuary. But when an imaginary phone begins to ring, the lines between reality, memory, and torture blur, forcing him to confront the nature of his own pain. This application provides an interactive deep dive into the play's powerful structure, characters, and searingly relevant themes.
@@ -88,20 +88,20 @@ body {
             <h2 class="font-serif text-4xl font-bold text-center mb-4 text-stone-100">Three Worlds, One Stage</h2>
             <p class="text-center text-stone-300 max-w-3xl mx-auto mb-12">The play's power lies in the constant tension between three distinct spaces that coexist and collide. Click on each world to explore its significance through key excerpts from the script.</p>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="world-card bg-white p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('cell')">
+                <div class="world-card p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('cell')">
                     <h3 class="font-serif text-2xl font-bold mb-2 text-stone-800">The Holding Cell</h3>
                     <p class="text-stone-600">The stark, physical reality of imprisonment and torture. A cage designed to break the body and spirit.</p>
                 </div>
-                <div class="world-card bg-white p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('office')">
+                <div class="world-card p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('office')">
                     <h3 class="font-serif text-2xl font-bold mb-2 text-stone-800">The Interrogation Office</h3>
                     <p class="text-stone-600">The weaponization of language and logic. A space of psychological warfare where truth is a casualty.</p>
                 </div>
-                <div class="world-card bg-white p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('sanctuary')">
+                <div class="world-card p-6 rounded-lg shadow-md border border-stone-200 cursor-pointer" onclick="showWorld('sanctuary')">
                     <h3 class="font-serif text-2xl font-bold mb-2 text-red-800">The Sanctuary</h3>
                     <p class="text-stone-600">The fragile inner world created as a refuge. A mental living room that becomes its own kind of prison.</p>
                 </div>
             </div>
-            <div id="world-details" class="mt-12 p-8 bg-stone-800 text-stone-200 rounded-lg shadow-xl min-h-[200px] flex items-center justify-center transition-opacity duration-500 opacity-0">
+            <div id="world-details" class="mt-12 p-8 text-stone-200 rounded-lg shadow-xl min-h-[200px] flex items-center justify-center transition-opacity duration-500 opacity-0" style="background-color: rgba(36, 36, 36, 0.7);">
                 <p class="text-center text-stone-400">Select a world above to see its details.</p>
             </div>
         </section>
@@ -109,7 +109,7 @@ body {
         <section id="arc" class="py-20 min-h-screen">
             <h2 class="font-serif text-4xl font-bold text-center mb-4 text-stone-100">The Psychological Arc</h2>
             <p class="text-center text-stone-300 max-w-3xl mx-auto mb-12">This chart visualizes the escalating psychological strain on Muhammad as the play progresses. The narrative is not linear; it is a descent punctuated by moments of false hope and profound crisis. Hover over points to see key plot events.</p>
-            <div class="chart-container bg-white p-4 rounded-lg shadow-md border border-stone-200 mx-auto" style="position: relative; height: 60vh; max-height: 500px; max-width: 900px;">
+            <div class="chart-container p-4 rounded-lg shadow-md border border-stone-200 mx-auto" style="position: relative; height: 60vh; max-height: 500px; max-width: 900px; background-color: rgba(255, 255, 255, 0.8);">
                 <canvas id="psychologicalArcChart"></canvas>
             </div>
         </section>
@@ -117,19 +117,19 @@ body {
         <section id="characters" class="py-20 min-h-screen">
             <h2 class="font-serif text-4xl font-bold text-center mb-12 text-stone-100">The Characters</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200 flex flex-col">
+                <div class="p-6 rounded-lg shadow-md border border-stone-200 flex flex-col" style="background-color: rgba(255, 255, 255, 0.8);">
                     <h3 class="font-serif text-xl font-bold">MUHAMMAD</h3>
                     <p class="text-stone-600 mt-2">A prisoner of war, mid-forties. His reality has fractured into a desperate struggle for sanity.</p>
                     <div id="muhammad-insight" class="mt-4 text-sm text-stone-800 italic">
                         </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200 flex flex-col">
+                <div class="p-6 rounded-lg shadow-md border border-stone-200 flex flex-col" style="background-color: rgba(255, 255, 255, 0.8);">
                     <h3 class="font-serif text-xl font-bold">TWO AMERICAN SOLDIERS</h3>
                     <p class="text-stone-600 mt-2">Both in their early twenties. They are the instruments of the interrogation, embodying the detached and systemic nature of the violence.</p>
                     <div id="soldiers-insight" class="mt-4 text-sm text-stone-800 italic">
                         </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border border-stone-200 flex flex-col">
+                <div class="p-6 rounded-lg shadow-md border border-stone-200 flex flex-col" style="background-color: rgba(255, 255, 255, 0.8);">
                     <h3 class="font-serif text-xl font-bold">ABDELAZIZ</h3>
                     <p class="text-stone-600 mt-2">A mysterious, scalded-faced figure who appears to Muhammad. He is a manifestation of pain, a tormentor, a guide, and perhaps Muhammad himself.</p>
                     <div id="abdelaziz-insight" class="mt-4 text-sm text-stone-800 italic">
@@ -140,7 +140,7 @@ body {
 
         <section id="script" class="py-20 min-h-screen">
             <h2 class="font-serif text-4xl font-bold text-center mb-12 text-stone-100">The Script</h2>
-            <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md border border-stone-200 space-y-2">
+            <div class="max-w-4xl mx-auto p-6 md:p-8 rounded-lg shadow-md border border-stone-200 space-y-2" style="background-color: rgba(255, 255, 255, 0.8);">
                 <div class="accordion-item">
                     <button class="accordion-header w-full text-left font-serif text-2xl p-4 bg-stone-50 hover:bg-stone-200 rounded transition-colors flex justify-between items-center">
                         Scene 01
@@ -179,16 +179,16 @@ body {
         <section id="context" class="py-20 min-h-screen">
             <h2 class="font-serif text-4xl font-bold text-center mb-12 text-stone-100">Context & Impact</h2>
             <div class="max-w-4xl mx-auto space-y-12">
-                <article class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                <article class="p-8 rounded-lg shadow-md border border-stone-200" style="background-color: rgba(255, 255, 255, 0.8);">
                     <h3 class="font-serif text-2xl font-bold mb-4">Foreword by Genna Rivieccio</h3>
                     <p class="text-stone-700 leading-relaxed">"The because doesn't matter anymore. So Muhammad tells us shortly into the play... The 'because' never mattered, of course. There has never been a true rhyme or reason to discrimination at its most vile. Other than for those in power to weaponize fear, to use it as a tool for control over the masses... The only difference, as many have already pointed out, is that, this time around, the mask is fully off. No pretending on the government’s part that they aren’t what they are: fascists here to subjugate. To oppress. To deport. To torture."</p>
                 </article>
-                <article class="bg-stone-800 text-stone-200 p-8 rounded-lg shadow-xl">
+                <article class="text-stone-200 p-8 rounded-lg shadow-xl" style="background-color: rgba(36, 36, 36, 0.7);">
                     <h3 class="font-serif text-2xl font-bold mb-4">From the Epilogue</h3>
                     <p class="leading-relaxed">"Black site prisons, prisons that operate outside the remit of any local or international law, are in use by a number of politically significant countries including Russia, China and the United States. Since 9/11, the U.S. has detained 780 Muslim men and boys that we know of, most of whom have never been charged with a crime, and all of whom have been tortured. At the time of this writing, 30 such detainees are still being held..."</p>
                 </article>
 
-                <div class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                <div class="p-8 rounded-lg shadow-md border border-stone-200" style="background-color: rgba(255, 255, 255, 0.8);">
                     <h3 class="font-serif text-2xl font-bold mb-4">✨ Explore a Theme</h3>
                     <div id="theme-insight" class="mt-4 text-stone-700 italic min-h-[50px] flex items-center justify-center">
                         <p class="text-stone-500"></p>
@@ -261,3 +261,101 @@ body {
         'Second Interrogation: Pressure increases.',
         'First Phone Call (Morse Code): Reality begins to warp.',
         'Physical Escalation (Slapping): Torture intensifies.',
+        'Abdelaziz Appears: The psychological split becomes manifest.',
+        'Waterboarding: Peak physical and mental trauma.',
+        'Confrontation with Abdelaziz: The core conflict is verbalized.',
+        'Climax & Dissolution: Complete breakdown of reality.'
+    ];
+
+    const ctx = document.getElementById('psychologicalArcChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: psychologicalArcData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Strain / Reality Detachment'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Progression of the Play'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += tooltips[context.dataIndex];
+                            }
+                            return label;
+                        }
+                    },
+                    bodyFont: {
+                        size: 14
+                    },
+                    padding: 12,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                }
+            }
+        }
+    });
+
+    document.querySelectorAll('.accordion-header').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const plusIcon = button.querySelector('.plus-icon');
+            
+            // Close other open accordions
+            button.parentElement.parentElement.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content && item.classList.contains('show')) {
+                    item.classList.remove('show');
+                    item.previousElementSibling.querySelector('.plus-icon').textContent = '+';
+                }
+            });
+
+            content.classList.toggle('show');
+            plusIcon.textContent = content.classList.contains('show') ? '-' : '+';
+        });
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active-nav');
+                    link.classList.add('inactive-nav');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active-nav');
+                        link.classList.remove('inactive-nav');
+                    }
+                });
+            }
+        });
+    }, { threshold: 0.5 }); // Adjust threshold if sections are very short or long
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+</script>
+</body>
+</html>
