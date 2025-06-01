@@ -10,13 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-/* Ensure html and body take up full viewport height */
-html, body {
-    height: 100%; /* THIS IS THE CRUCIAL ADDITION */
+/* Ensure html and body take up full viewport height and have transparent backgrounds */
+html {
+    height: 100%;
+    background-color: transparent; /* Ensure HTML background is transparent */
 }
 
-/* Custom CSS for the body background and other elements */
 body {
+    height: 100%; /* Ensure body takes full height */
     font-family: 'Inter', sans-serif;
     background-image: url('https://raw.githubusercontent.com/iuoala777/when-the-phone-rang/main/windows-tv-cushions.jpg');
     background-size: cover;
@@ -291,10 +292,10 @@ body {
                     title: {
                         display: true,
                         text: 'Strain / Reality Detachment',
-                        color: '#e0e0e0' /* Light color for axis title */
+                        color: 'white' /* Changed to white for better visibility */
                     },
                     ticks: {
-                        color: '#e0e0e0' /* Light color for axis ticks */
+                        color: 'white' /* Changed to white for better visibility */
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.2)' /* Light, transparent grid lines */
@@ -304,10 +305,10 @@ body {
                     title: {
                         display: true,
                         text: 'Progression of the Play',
-                        color: '#e0e0e0' /* Light color for axis title */
+                        color: 'white' /* Changed to white for better visibility */
                     },
                     ticks: {
-                        color: '#e0e0e0' /* Light color for axis ticks */
+                        color: 'white' /* Changed to white for better visibility */
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.2)' /* Light, transparent grid lines */
